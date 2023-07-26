@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/webrecorder/browsertrix-js-api.git"
+    "url": "git+https://github.com/webrecorder/browsertrix-client.git"
   },
   "author": "Webrecorder",
   "license": "AGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/webrecorder/browsertrix-js-api/issues"
+    "url": "https://github.com/webrecorder/browsertrix-client/issues"
   },
-  "homepage": "https://github.com/webrecorder/browsertrix-js-api#readme"
+  "homepage": "https://github.com/webrecorder/browsertrix-client#readme"
 }
