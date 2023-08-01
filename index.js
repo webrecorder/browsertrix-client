@@ -41,6 +41,10 @@ export class APIClient {
     return await resp.json();
   }
 
+  async logout() {
+    return await this.fetchAPI("/api/logout");
+  }
+
   async getOrg(name = "") {
     const json = await this.fetchAPI("/api/users/me-with-orgs");
     const { orgs } = json;
@@ -58,12 +62,36 @@ export class APIClient {
     return orgs[0].id;
   }
 
+  async listCrawls(org) {
+    return await this.fetchAPI(`/api/${org}/crawls`);
+  }
+
+  async getCrawl(org, cid = "") {
+    if (cid) {
+      return await this.fetchAPI(`/api/${org}/crawls/${cid}/replay.json`);
+    }
+    console.log("You must provide a Crawl ID to get");
+  }
+
+  async stopCrawlGraceful(org, cid = "") {
+    if (cid) {
+      return await this.fetchAPI(
+        `/api/${org}/crawls/${cid}`,
+        (method = "POST"),
+      );
+    }
+    console.log("You must provide a Crawl ID to stop");
+  }
+
   async getCrawlerWorkflows(org) {
     return await this.fetchAPI(`/api/${org}/crawlconfigs`);
   }
 
   async getCrawlerWorkflow(org, cid = "") {
-    return await this.fetchAPI(`/api/${org}/crawlconfigs/${cid}`);
+    if (cid) {
+      return await this.fetchAPI(`/api/${org}/crawlconfigs/${cid}`);
+    }
+    console.log("You must provide a Crawler Workflow ID to get");
   }
 
   async updateCrawlerWorkflow(org, cid = "", config) {
@@ -84,7 +112,7 @@ export class APIClient {
         (method = "DELETE"),
       );
     }
-    console.log("You must provide a Crawler ID");
+    console.log("You must provide a Crawler Workflow ID to delete");
   }
 
   async addCrawlerWorkflow(org, config) {
@@ -95,17 +123,17 @@ export class APIClient {
         (body = config),
       );
     }
-    console.log("You must provide a Crawler Workflow");
+    console.log("You must provide a Crawler Workflow configuration");
   }
 
-  async runCrawl(org, cid = "") {
+  async runCrawlWorkflow(org, cid = "") {
     if (cid) {
       return await this.fetchAPI(
         `/api/${org}/crawlconfigs/${cid}/run`,
         (method = "POST"),
       );
     }
-    console.log("You must provide a Crawler ID");
+    console.log("You must provide a Crawler Workflow ID");
   }
 
   async upload(org, data) {
